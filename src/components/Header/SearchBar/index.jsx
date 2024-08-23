@@ -1,10 +1,11 @@
+import styles from './SearchBar.module.css'
 import searchIcon from '@/assets/search-icon.svg'
 
 const SearchBar = () => {
   return (
-    <form>
+    <form className={styles.form} >
         <input type="text"/>
-        <button type='submit'><img src={searchIcon} alt="" /></button>
+        <button type='submit' className={styles.button} ><img src={searchIcon} alt="" /></button>
     </form>
   )
 }

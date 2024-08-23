@@ -1,0 +1,28 @@
+.form{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    
+}
+
+.form input{
+    padding: 5px;
+    border-radius: 3px;
+    border: none;
+    height: 25px;
+    width: 300px;
+}
+
+.button{
+    padding: 5px;
+    border-radius: 3px;
+    border: none;
+    background-color: orange;
+    color: white;
+    cursor: pointer;
+}
+
+.button img {
+    width: 40px;
+    height: 25px;
+}
