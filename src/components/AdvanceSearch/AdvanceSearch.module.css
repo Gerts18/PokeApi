@@ -1,6 +1,6 @@
 .searchContainer{
-    background-color: #4a4a4a;
-    color: #ffffff;
+    background-color: var(--color-tertiary);
+    color: var(--color-primary);
     text-align: center;
     padding: 10px;
 }
@@ -9,18 +9,27 @@
     cursor: pointer;
     font-size: 18px;
     padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.image { 
+    width: 30px;
+    height: 30px
 }
 
 .advanceSearchContent {
-    background-color: #333333;
+    background-color: var(--color-secundary);
     padding: 20px;
     margin-top: 10px;
-    border-top: 1px solid #555555;
 }
 
 .otherFilters{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 10px
+    margin-block: 10px;
+    margin-inline: 30px;
 }

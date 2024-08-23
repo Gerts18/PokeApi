@@ -2,6 +2,8 @@ import { useState } from 'react'
 import styles from './AdvanceSearch.module.css'
 import Randomizer from './Randomizer'
 import Sorter from './Sorter'
+import downArrow from '@/assets/arrow_drop_down.svg'
+import upArrow from '@/assets/arrow_drop_up.svg'
 
 const AdvanceSearch = () => {
     const [isVisible, setIsVisible] = useState(false)
@@ -14,7 +16,8 @@ const AdvanceSearch = () => {
         <>
             <div className={styles.searchContainer}>
                 <div className={styles.searchToggle} onClick={toggleVisibility}>
-                    Show Advance Search
+                    <p>Show Advance Search</p>
+                    <img className={styles.image} src={isVisible ? upArrow : downArrow} alt="" />
                 </div>
                 {
                     isVisible && (

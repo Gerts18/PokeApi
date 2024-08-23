@@ -3,7 +3,7 @@
     height: 25px;
     padding: 10px;
     text-align: center;
-    background-color: cornflowerblue;
+    background-color: var(--color-quaternary);
     border-radius: 5px;
     display: flex;
     justify-content: center;

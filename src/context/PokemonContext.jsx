@@ -6,6 +6,27 @@ const PokemonProvider = ({ children }) => {
     const [pokemonsUrls, setPokemonsUrls] = useState([]);
     const [pokemonsList, setPokemonsList] = useState([]);
 
+    const typeColors ={
+        fire: 'orange',
+        water: 'lightblue',
+        grass: 'lightgreen',
+        electric: 'yellow',
+        ice: 'lightblue',
+        fighting: 'red',
+        poison: 'blueviolet',
+        ground: 'brown',
+        flying: 'lightgrey',
+        psychic: 'pink',
+        bug: 'olive',
+        rock: 'gray',
+        ghost: 'indigo',
+        dragon: 'purple',
+        dark: 'darkslategray',
+        steel: 'silver',
+        fairy: 'pink',
+        normal: 'beige'
+    }
+
     useEffect(() => {
         const getPokemons = async () => {
             const request = await fetch("https://pokeapi.co/api/v2/pokemon?limit=10");
@@ -26,10 +47,23 @@ const PokemonProvider = ({ children }) => {
             setPokemonsList(data);
         };
         getPokemonsData();
-    }, [pokemonsUrls])
+    }, [pokemonsUrls]);
+        
+    const refactorDetails = (key, data) => {
+        switch (key) {
+            case 'id':
+                return data.toString().padStart(3, '0');
+            case 'name':
+                return data.charAt(0).toUpperCase() + data.slice(1);
+            case 'types':
+                return data.types;
+            default:
+                return null;
+         }
+    }
 
     return (
-        <PokemonContext.Provider value={{pokemonsList}}>
+        <PokemonContext.Provider value={{pokemonsList, refactorDetails, typeColors}}>
             {children}
         </PokemonContext.Provider>
     );

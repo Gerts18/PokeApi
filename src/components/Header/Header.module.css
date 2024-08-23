@@ -3,7 +3,7 @@
     justify-content: space-between;
     align-items: flex-start;
     padding: 20px;
-    background-color: rgb(44, 47, 49);
+    background-color: var(--color-secundary);
     color: white;
 }
 
