@@ -12,3 +12,29 @@
     width: 100%;
     height: 200px;
 }
+
+.pokemonNumber{
+    font-weight: bold;
+    font-size: 15px;
+    color: rgb(125, 127, 129);
+}
+
+.pokemonName{
+    font-size: 25px;
+}
+
+.typesContainer{
+    display: flex;
+    gap: 5px;
+    margin-block: 4px;
+}
+
+.type{
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 15px;
+    width: 50px;
+    height: 15px;
+    text-align: center;
+    font-weight: 400;
+}
