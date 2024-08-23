@@ -1,9 +1,8 @@
 .header {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: flex-start;
-    padding-inline: 10px;
-    padding-block: 10px;
+    padding: 20px;
     background-color: rgb(44, 47, 49);
     color: white;
 }

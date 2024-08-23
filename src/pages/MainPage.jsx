@@ -1,11 +1,13 @@
 import Header from "../components/Header"
+import Pokedex from "../components/Pokedex"
 
 
 const MainPage = () => {
   return (
-    <section>
+    <div>
         <Header/>
-    </section>
+        <Pokedex/>
+    </div>
   )
 }
 
