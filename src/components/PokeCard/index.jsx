@@ -24,39 +24,32 @@ const PokeCard = (props) => {
     normal: 'beige'
   };
 
-  const { pokemonName, url } = props
+  const { pokemonDetails } = props 
 
-  const [pokemonDetails, setPokemonDetails] = useState(null);
+  const pokemonNumber =  pokemonDetails.id.toString().padStart(3, '0');  
+  const pokemonName = pokemonDetails.name.charAt(0).toUpperCase() + pokemonDetails.name.slice(1);
+  const pokemonTypes = pokemonDetails.types
 
-  useEffect(
-    () => {
-      const getPokemonDetails = async () => {
-        const request = await fetch(url);
-        const data = await request.json();
-        setPokemonDetails(data);
-      };
-      getPokemonDetails();
-    }, [url]
-  )
-
-  const pokemonNumber = pokemonDetails && pokemonDetails.id.toString().padStart(3, '0');  
-  const name = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
 
   return (
     <div className={styles.cardContainer}>
       <img
         className={styles.pokemonImage}
-        src={pokemonDetails && pokemonDetails.sprites.other.home.front_default}
+        src={pokemonDetails.sprites.other.home.front_default}
         alt=""
       />
       <div className={styles.pokemonInfo}>
-        <p className={styles.pokemonNumber}> {pokemonDetails && `#${pokemonNumber}` } </p>
-        <h1 className={styles.pokemonName}>{name}</h1>
+        <p className={styles.pokemonNumber}> {`#${pokemonNumber}` } </p>
+        <h1 className={styles.pokemonName}>{pokemonName}</h1>
         <div className={styles.typesContainer}>
-          {
-            pokemonDetails && 
-            pokemonDetails.types.map((type, index) => (
-              <p className={styles.type} key={index} style={{backgroundColor: typeColors[type.type.name]}}  >{type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)}</p>
+          { 
+            pokemonTypes.map((type, index) => (
+              <p 
+                className={styles.type} 
+                key={index} 
+                style={{backgroundColor: typeColors[type.type.name]}}>
+                  {type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)}
+              </p>
             ))
           }
         </div>

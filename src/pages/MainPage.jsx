@@ -6,6 +6,7 @@ const MainPage = () => {
   return (
     <div>
         <Header/>
+        
         <Pokedex/>
     </div>
   )

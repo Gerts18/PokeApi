@@ -11,7 +11,7 @@ const Pokedex = () => {
         <section className={styles.mainContainer}>
             {
                 pokemonsList.map((pokemon, index) => (
-                    <PokeCard key={index} pokemonName={pokemon.name} url = {pokemon.url} />
+                    <PokeCard key={index} pokemonDetails = {pokemon} />
                 ))
             }
         </section>
