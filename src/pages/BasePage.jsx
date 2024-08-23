@@ -1,9 +1,12 @@
 import { Outlet } from 'react-router-dom'
+import PokemonProvider from '../context/PokemonContext'
 
 const BasePage = () => {
   return (
     <main>
-      <Outlet/>
+      <PokemonProvider>
+        <Outlet/>
+      </PokemonProvider>
     </main>
   )
 }
