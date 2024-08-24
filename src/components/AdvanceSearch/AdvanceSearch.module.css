@@ -1,0 +1,35 @@
+.searchContainer{
+    background-color: var(--color-tertiary);
+    color: var(--color-primary);
+    text-align: center;
+    padding: 10px;
+}
+
+.searchToggle{
+    cursor: pointer;
+    font-size: 18px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.image { 
+    width: 30px;
+    height: 30px
+}
+
+.advanceSearchContent {
+    background-color: var(--color-secundary);
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.otherFilters{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-block: 10px;
+    margin-inline: 30px;
+}

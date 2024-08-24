@@ -1,8 +1,8 @@
 import {BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import BasePage from './pages/BasePage'
-import MainPage from './pages/MainPage'
-import PokeInfo from './pages/PokeInfo'
-import Page404 from './pages/Page404'
+import Page404 from './pages/404/Page404'
+import PokemonDetails from './pages/PokeDetails/PokemonDetails'
+import BasePage from './pages/BasePage/BasePage'
+import MainPage from './pages/MainPage/MainPage'
 
 const AppRoutes = () => {
   return (
@@ -10,7 +10,7 @@ const AppRoutes = () => {
         <Routes>
             <Route path='/' element={<BasePage/>}>
                 <Route index element={<MainPage/>} />
-                <Route path='/pokemon/id:' element={<PokeInfo/>} />
+                <Route path='pokemon/:id' element={<PokemonDetails/>} />
                 <Route path='*' element={<Page404/>} />
             </Route>
         </Routes>

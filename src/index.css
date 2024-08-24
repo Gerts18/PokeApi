@@ -2,6 +2,9 @@
 
 :root {
   --color-primary: #ffffff;
+  --color-secundary:rgb(44, 47, 49);
+  --color-tertiary: #4a4a4a;
+  --color-quaternary: cornflowerblue;
 }
 
 html {
