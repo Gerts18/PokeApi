@@ -123,7 +123,9 @@ const PokemonDetails = () => {
 
               <div className={styles.pokemonDescription}>
 
-                <p> {species && species.flavor_text_entries[0].flavor_text.replace(/\f/g, ' ')} </p>
+                <p>
+                   {species && species.flavor_text_entries[0].flavor_text.replace(/\f/g, ' ')}
+                </p>
 
                 <div className={styles.mainVersionsContainer}>
                   <p>Versions:</p>
