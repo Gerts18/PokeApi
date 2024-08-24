@@ -62,8 +62,19 @@ const PokemonProvider = ({ children }) => {
          }
     }
 
+    const requestData = async (url) => {
+        try {
+          const request = await fetch(url);
+          const data = await request.json();
+          return data;
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          return null; 
+        }
+      };
+
     return (
-        <PokemonContext.Provider value={{pokemonsList, refactorDetails, typeColors}}>
+        <PokemonContext.Provider value={{pokemonsList, refactorDetails, typeColors, requestData}}>
             {children}
         </PokemonContext.Provider>
     );
