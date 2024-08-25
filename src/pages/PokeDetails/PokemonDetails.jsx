@@ -5,6 +5,7 @@ import styles from './PokemonDetails.module.css'
 import pokeball from '@/assets/pokeball_colored.png'
 import male from '@/assets/male_icon.svg'
 import female from '@/assets/female_icon.svg'
+import StatsBar from './StatsBar'
 
 const PokemonDetails = () => {
 
@@ -141,15 +142,22 @@ const PokemonDetails = () => {
                 <img className={styles.pokeImage} src={pokemonImage} alt="" />
 
                 <div className={styles.stats}>
-                  {
+                  <p>Stats</p>
+                  <div className={styles.statsContainer}>
+                    {
                     pokemon.stats.map((stat, index) => {
-                      return (
-                        <p key={index} >{stat.stat.name}, {stat.base_stat} </p>
-                      )
-                    })
-                  }
+                        return (
+                          <StatsBar
+                            label={refactorDetails('name', stat.stat.name)} 
+                            value={stat.base_stat} 
+                            maxValue={200} 
+                          />
+                        )
+                      })
+                    }
+                  </div>
                 </div>
-                
+
               </div>
 
               <div className={styles.pokemonDescription}>

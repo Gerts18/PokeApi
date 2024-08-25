@@ -50,10 +50,18 @@ h2 {
 }
 
 .stats {
-    background-color: grey;
+    background-color: #a4a4a4;
     border-radius: 5px;
     padding: 15px;
-    width: 400px;
+    width: 400px; 
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.statsContainer {
+    display: flex;
+    justify-content: space-around;
 }
 
 .pokemonDescription {
