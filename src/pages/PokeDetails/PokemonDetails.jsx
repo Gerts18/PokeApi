@@ -36,7 +36,7 @@ const PokemonDetails = () => {
     pokemonsList, pokemon, pokemonImage, species, types, weaknesses, evolutionChain, pokeId
   ]
 
-  console.log(states)
+  console.log(pokemonsList)
 
   useEffect(() => {
     if (pokemonsList.length === 0) return;

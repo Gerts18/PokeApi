@@ -3,9 +3,10 @@ import { createContext, useEffect, useState } from "react";
 export const PokemonContext = createContext();
 
 const PokemonProvider = ({ children }) => {
-    const [pokemonsUrls, setPokemonsUrls] = useState([]);
+
     const [pokemonsList, setPokemonsList] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [offset, setOffset] = useState(0); 
+    const limit = 20; 
 
     const typeColors = {
         fire: 'orange',
@@ -28,29 +29,38 @@ const PokemonProvider = ({ children }) => {
         normal: 'beige'
     }
 
-    /*Get pokemons urls */
-    useEffect(() => {
-        const getPokemons = async () => {
-            const request = await fetch("https://pokeapi.co/api/v2/pokemon");
-            const data = await request.json();
-            setPokemonsUrls(data.results);
-        };
-        getPokemons();
-    }, []);
 
-    /* Get data for each pokemon */
     useEffect(() => {
-        const getPokemonsData = async () => {
-            const data = await Promise.all(
-                pokemonsUrls.map(async (pokemon) => {
-                    const request = await fetch(pokemon.url);
-                    return request.json();
-                })
-            );
-            setPokemonsList(data);
+        const loadPokemons = async () => {
+            try {
+                // Get pokemons urls
+                const request = await fetch(
+                    `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
+                );
+                const data = await request.json();
+                
+                //Obtain specific data of each pokemon 
+                const pokemonsData = await Promise.all(
+                    data.results.map(async (pokemon) => {
+                        const request = await fetch(pokemon.url);
+                        return request.json();
+                    })
+                );
+
+                // Add new pokemons
+                setPokemonsList( [...pokemonsList, ...pokemonsData]);
+
+            } catch (error) {
+                console.error("Error fetching Pokémon data:", error);
+            } 
         };
-        getPokemonsData();
-    }, [pokemonsUrls]);
+
+        loadPokemons();
+    }, [offset]); 
+
+    const loadMorePokemons = () => {
+        setOffset((prevOffset) => prevOffset + limit);
+    };
 
     const refactorDetails = (key, data) => {
         switch (key) {
@@ -77,7 +87,15 @@ const PokemonProvider = ({ children }) => {
     };
 
     return (
-        <PokemonContext.Provider value={{ pokemonsList, refactorDetails, typeColors, requestData }}>
+        <PokemonContext.Provider
+         value={{ 
+                pokemonsList, 
+                refactorDetails, 
+                typeColors, 
+                requestData, 
+                loadMorePokemons 
+            }}
+        >
             {children}
         </PokemonContext.Provider>
     );

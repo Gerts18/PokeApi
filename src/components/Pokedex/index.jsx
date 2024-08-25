@@ -7,7 +7,7 @@ import styles from './Pokedex.module.css'
 const Pokedex = () => {
 
     const {pokemonsList} = useContext(PokemonContext);
-
+    //console.log(pokemonsList)
     return (
         <section className={styles.mainContainer}>
             {
