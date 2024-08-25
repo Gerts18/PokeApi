@@ -4,11 +4,13 @@ import styles from './BasePage.module.css'
 
 const BasePage = () => {
   return (
-    <main>
-      <PokemonProvider>
-         <Outlet/>
-      </PokemonProvider>
-    </main>
+    <div className={styles.outerContainer} >
+      <main className={styles.mainContainer}>
+        <PokemonProvider>
+          <Outlet />
+        </PokemonProvider>
+      </main>
+    </div>
   )
 }
 
