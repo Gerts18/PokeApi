@@ -63,32 +63,32 @@ const PokemonDetails = () => {
 
 
   const handleVersions = (versions) => {
-    const sprites = []
 
-    Object.entries(versions).forEach(
-      ([generation, games]) => {
-        Object.entries(games).forEach(
-          ([gameName, sprite]) => {
-            if (sprite.front_default) {
-              sprites.push({ gameName, imageUrl: sprite.front_default });
-            }
-          }
-        )
-      }
-    );
+    const sprites = Object.entries(versions).map(([key, url]) => {
+      return {
+          name: key.replace("front_", ""),
+          image: url
+      };
+    });
 
     return (
       <>
         {
           sprites.map((sprite, index) => (
+
             <div key={index} className={styles.versionContainer} >
-              <p className={styles.overlay} >{sprite.gameName} </p>
-              <img className={styles.imageVersion} src={pokeball} alt="" onClick={() => setPokemonImage(sprite.imageUrl)} />
+              <p className={styles.overlay}> {refactorDetails('name', sprite.name)} </p>
+              <img 
+                className={styles.imageVersion} 
+                src={pokeball}  
+                onClick={() => setPokemonImage(sprite.image)} 
+              />
             </div>
+
           ))
         }
       </>
-    )
+    ) 
   }
 
   const handleHeight = (dm) => {
@@ -148,6 +148,7 @@ const PokemonDetails = () => {
                     pokemon.stats.map((stat, index) => {
                         return (
                           <StatsBar
+                            key={index}
                             label={refactorDetails('name', stat.stat.name)} 
                             value={stat.base_stat} 
                             maxValue={200} 
@@ -170,12 +171,8 @@ const PokemonDetails = () => {
                   <p>Versions:</p>
 
                   <div className={styles.versions}>
-                    <div className={styles.versionContainer} >
-                      <div className={styles.overlay}> current design </div>
-                      <img className={styles.imageVersion} src={pokeball} alt="" onClick={() => setPokemonImage(pokemon.sprites.other['official-artwork'].front_default)} />
-                    </div>
                     {
-                      handleVersions(pokemon.sprites.versions)
+                      handleVersions(pokemon.sprites.other['official-artwork'])
                     }
                   </div>
 
