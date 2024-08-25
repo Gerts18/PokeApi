@@ -29,7 +29,7 @@ const PokemonProvider = ({ children }) => {
 
     useEffect(() => {
         const getPokemons = async () => {
-            const request = await fetch("https://pokeapi.co/api/v2/pokemon?limit=10");
+            const request = await fetch("https://pokeapi.co/api/v2/pokemon");
             const data = await request.json();
             setPokemonsUrls(data.results);
         };
