@@ -25,70 +25,81 @@ const PokemonDetails = () => {
 
   const pokeId = Number(id)
 
-  const nextPokemon = pokemonsList.find(pokemon => pokemon.id == (pokeId + 1))
+  const nextPokemon = pokemonsList.find(pokemon => pokemon.id == (
+    (pokeId + 1 > pokemonsList.length) ? 1 : pokeId + 1
+  ))
   const previousPokemon = pokemonsList.find(pokemon => pokemon.id == (
     (pokeId - 1 == 0) ? pokemonsList.length : pokeId - 1
   ))
 
-  console.log(previousPokemon)
+  let states = [
+    pokemonsList, pokemon, pokemonImage, species, types, weaknesses, evolutionChain, pokeId
+  ]
+
+  console.log(states)
 
   useEffect(() => {
+    if (pokemonsList.length === 0) return;
+
     const currentPokemon = pokemonsList.find(pokemon => pokemon.id == pokeId);
     setPokemon(currentPokemon);
+
+    setPokemonImage('');
+    setSpecies(null);
+    setTypes([]);
+    setWeaknesses([]);
+    setEvolutionChain([]);
+
   }, [pokeId, pokemonsList])
 
-  /*To handle data from the pokemon */
-  useEffect(() => {
-    if (pokemon) {
-      setPokemonImage(pokemon.sprites.other['official-artwork'].front_default);
-      setTypes(pokemon.types.map(typeInfo => typeInfo.type.url))
-    }
-  }, [pokemon]);
 
-  /*To handle individual requests */
   useEffect(() => {
     if (!pokemon) return;
 
-    const fetchData = async () => {
-      const urls = [
-        {
-          url: pokemon.species.url,
-          set_data: setSpecies
-        },
-        ...types.map(typeObj => ({
-          url: typeObj,
-          set_data: (obj) => {
-            setWeaknesses((prev) => {
-              const newWeaknesses = obj.damage_relations.double_damage_from.map((type) => type.name);
-              return [...new Set([...prev, ...newWeaknesses])];
-            })
-          }
-        }))
-      ];
+    setPokemonImage(pokemon.sprites.other['official-artwork'].front_default);
+    setTypes(pokemon.types.map(typeInfo => typeInfo.type.url));
+
+    const fetchSpeciesData = async () => {
+      const speciesData = await requestData(pokemon.species.url);
+      setSpecies(speciesData);
+    };
+
+    fetchSpeciesData();
+    
+  }, [pokemon, requestData]);
+
+  useEffect(() => {
+    if (types.length === 0 || !pokemon) return;
+
+    const fetchWeaknessesData = async () => {
+      const urls = types.map(typeUrl => ({
+        url: typeUrl,
+        set_data: (data) => {
+          setWeaknesses((prev) => {
+            const newWeaknesses = data.damage_relations.double_damage_from.map(type => type.name);
+            return [...new Set([...prev, ...newWeaknesses])];
+          });
+        }
+      }));
 
       for (const { url, set_data } of urls) {
-        if (!url) continue;
         const response = await requestData(url);
         set_data(response);
       }
     };
 
-    fetchData();
-  }, [pokemon, requestData]);
+    fetchWeaknessesData();
+  }, [types, pokemon, requestData]);
 
   useEffect(() => {
     if (!species || !species.evolution_chain) return;
 
-    const fetchEvolutionChain = async () => {
-      try {
-        const response = await requestData(species.evolution_chain.url);
-        setEvolutionChain(response);
-      } catch (error) {
-        console.error('Error fetching evolution chain:', error);
-      }
+    const fetchEvolutionChainData = async () => {
+      const evolutionData = await requestData(species.evolution_chain.url);
+      setEvolutionChain(evolutionData);
     };
 
-    fetchEvolutionChain();
+    fetchEvolutionChainData();
   }, [species, requestData]);
 
   const handleVersions = (versions) => {

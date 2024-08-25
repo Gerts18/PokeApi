@@ -1,12 +1,13 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const PokemonContext = createContext();
 
 const PokemonProvider = ({ children }) => {
     const [pokemonsUrls, setPokemonsUrls] = useState([]);
     const [pokemonsList, setPokemonsList] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const typeColors ={
+    const typeColors = {
         fire: 'orange',
         water: 'lightblue',
         grass: 'lightgreen',
@@ -27,6 +28,7 @@ const PokemonProvider = ({ children }) => {
         normal: 'beige'
     }
 
+    /*Get pokemons urls */
     useEffect(() => {
         const getPokemons = async () => {
             const request = await fetch("https://pokeapi.co/api/v2/pokemon");
@@ -36,6 +38,7 @@ const PokemonProvider = ({ children }) => {
         getPokemons();
     }, []);
 
+    /* Get data for each pokemon */
     useEffect(() => {
         const getPokemonsData = async () => {
             const data = await Promise.all(
@@ -48,7 +51,7 @@ const PokemonProvider = ({ children }) => {
         };
         getPokemonsData();
     }, [pokemonsUrls]);
-        
+
     const refactorDetails = (key, data) => {
         switch (key) {
             case 'id':
@@ -59,22 +62,22 @@ const PokemonProvider = ({ children }) => {
                 return data.types;
             default:
                 return null;
-         }
+        }
     }
 
     const requestData = async (url) => {
         try {
-          const request = await fetch(url);
-          const data = await request.json();
-          return data;
+            const request = await fetch(url);
+            const data = await request.json();
+            return data;
         } catch (error) {
-          console.error("Error fetching data:", error);
-          return null; 
+            console.error("Error fetching data:", error);
+            return null;
         }
-      };
+    };
 
     return (
-        <PokemonContext.Provider value={{pokemonsList, refactorDetails, typeColors, requestData}}>
+        <PokemonContext.Provider value={{ pokemonsList, refactorDetails, typeColors, requestData }}>
             {children}
         </PokemonContext.Provider>
     );
