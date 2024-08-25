@@ -23,14 +23,14 @@ const PokemonDetails = () => {
   const [weaknesses, setWeaknesses] = useState([])
   const [evolutionChain, setEvolutionChain] = useState([])
 
-  const pokeId =  Number(id)
+  const pokeId = Number(id)
 
   const nextPokemon = pokemonsList.find(pokemon => pokemon.id == (pokeId + 1))
   const previousPokemon = pokemonsList.find(pokemon => pokemon.id == (
-    (pokeId-1 == 0) ? pokemonsList.length : pokeId - 1 
+    (pokeId - 1 == 0) ? pokemonsList.length : pokeId - 1
   ))
 
-  //console.log(pokeId)
+  console.log(previousPokemon)
 
   useEffect(() => {
     const currentPokemon = pokemonsList.find(pokemon => pokemon.id == pokeId);
@@ -175,7 +175,6 @@ const PokemonDetails = () => {
       chain.evolves_to.forEach(evolution => traverseEvolution(evolution));
     }
 
-
     traverseEvolution(evolutionChain.chain);
 
     return results;
@@ -191,12 +190,12 @@ const PokemonDetails = () => {
               left
               name={refactorDetails('name', previousPokemon.name)}
               number={`#${refactorDetails('id', previousPokemon.id)}`}
-              id= {previousPokemon.id}
+              id={previousPokemon.id}
             />
             <Change
               name={refactorDetails('name', nextPokemon.name)}
               number={`#${refactorDetails('id', nextPokemon.id)}`}
-              id = {nextPokemon.id}
+              id={nextPokemon.id}
             />
           </section>
 

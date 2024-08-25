@@ -5,7 +5,7 @@ import styles from './BasePage.module.css'
 const BasePage = () => {
   return (
     <div className={styles.outerContainer} >
-      <main className={styles.mainContainer}>
+      <main className={styles.pincipalContainer}>
         <PokemonProvider>
           <Outlet />
         </PokemonProvider>
