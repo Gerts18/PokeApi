@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import styles from './AdvanceSearch.module.css'
-import Randomizer from './Randomizer'
+import AdvancedButton from './AdvancedButton'
 import Sorter from './Sorter'
 import downArrow from '@/assets/arrow_drop_down.svg'
 import upArrow from '@/assets/arrow_drop_up.svg'
@@ -28,7 +28,9 @@ const AdvanceSearch = () => {
                 }
             </div>
             <div className={styles.otherFilters}>
-                <Randomizer/>
+                <AdvancedButton>
+                    <p>Surprise Me!</p>
+                </AdvancedButton>
                 <Sorter/>
             </div>
         </>
