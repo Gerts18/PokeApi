@@ -7,6 +7,7 @@ import male from '@/assets/male_icon.svg'
 import female from '@/assets/female_icon.svg'
 import StatsBar from './StatsBar'
 import PokeCard from '../../components/PokeCard'
+import Change from './ChangePokemon'
 
 const PokemonDetails = () => {
 
@@ -22,12 +23,15 @@ const PokemonDetails = () => {
   const [weaknesses, setWeaknesses] = useState([])
   const [evolutionChain, setEvolutionChain] = useState([])
 
-  const nextPokemon = pokemonsList.find(pokemon => pokemon.id == (id+1))
-  
+  const pokeId =  Number(id)
+
+  const nextPokemon = pokemonsList.find(pokemon => pokemon.id == (pokeId + 1))
+
+
   useEffect(() => {
-    const currentPokemon = pokemonsList.find(pokemon => pokemon.id == id);
+    const currentPokemon = pokemonsList.find(pokemon => pokemon.id == pokeId);
     setPokemon(currentPokemon);
-  }, [id, pokemonsList]) 
+  }, [pokeId, pokemonsList])
 
   /*To handle data from the pokemon */
   useEffect(() => {
@@ -59,7 +63,7 @@ const PokemonDetails = () => {
       ];
 
       for (const { url, set_data } of urls) {
-        if (!url) continue; 
+        if (!url) continue;
         const response = await requestData(url);
         set_data(response);
       }
@@ -70,7 +74,7 @@ const PokemonDetails = () => {
 
   useEffect(() => {
     if (!species || !species.evolution_chain) return;
-  
+
     const fetchEvolutionChain = async () => {
       try {
         const response = await requestData(species.evolution_chain.url);
@@ -79,7 +83,7 @@ const PokemonDetails = () => {
         console.error('Error fetching evolution chain:', error);
       }
     };
-  
+
     fetchEvolutionChain();
   }, [species, requestData, evolutionChain]);
 
@@ -149,7 +153,7 @@ const PokemonDetails = () => {
   const handleEvolutions = (evolutionChain) => {
 
     if (!evolutionChain || !evolutionChain.chain) {
-      return []; 
+      return [];
     }
 
     const results = [];
@@ -167,13 +171,13 @@ const PokemonDetails = () => {
       chain.evolves_to.forEach(evolution => traverseEvolution(evolution));
     }
 
-    
+
     traverseEvolution(evolutionChain.chain);
 
     return results;
   }
 
-  /* const handleChangePokemon = (newId) => {
+  const handleChangePokemon = (newId) => {
     const newPokemon = pokemonsList.find(pokemon => pokemon.id == newId);
     if (newPokemon) {
       setPokemon(newPokemon);
@@ -182,7 +186,7 @@ const PokemonDetails = () => {
       setWeaknesses([]);
       setEvolutionChain([]);
     }
-  }; */
+  };
 
   return (
     <>
@@ -190,8 +194,17 @@ const PokemonDetails = () => {
         pokemon &&
         <>
           <section className={styles.changeContainer}>
-
+            <Change
+              left
+              name={refactorDetails('name', nextPokemon.name)}
+              number={`#${refactorDetails('id', nextPokemon.id)}`}
+            />
+            <Change
+              name={refactorDetails('name', nextPokemon.name)}
+              number={`#${refactorDetails('id', nextPokemon.id)}`}
+            />
           </section>
+
           <section className={styles.mainContainer} >
             <div className={styles.pokemonTitle}>
               <h1 className={styles.text}> {refactorDetails('name', pokemon.name)} </h1>
@@ -339,23 +352,23 @@ const PokemonDetails = () => {
             <h2>Evolutions</h2>
             <div className={styles.pokemonEvolutions}>
               {
-                species && 
+                species &&
                 handleEvolutions(evolutionChain).map((evolution, index) => {
                   let pokemonData = pokemonsList.find(pokemon => pokemon.id == evolution.id)
                   if (!pokemonData) {
                     console.error(`Pokemon with id ${evolution.id} not found in pokemonsList`);
-                    return null; 
+                    return null;
                   }
                   return (
                     <PokeCard
                       key={index}
-                      pokemonDetails = {pokemonData}
+                      pokemonDetails={pokemonData}
                       evolution
                     >
-                    </PokeCard> 
+                    </PokeCard>
                   )
-                  
-                })  
+
+                })
               }
             </div>
           </section>
