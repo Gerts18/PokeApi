@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { PokemonContext } from '@/context/PokemonContext'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import styles from './PokemonDetails.module.css'
 import pokeball from '@/assets/pokeball_colored.png'
 import male from '@/assets/male_icon.svg'
@@ -26,7 +26,11 @@ const PokemonDetails = () => {
   const pokeId =  Number(id)
 
   const nextPokemon = pokemonsList.find(pokemon => pokemon.id == (pokeId + 1))
+  const previousPokemon = pokemonsList.find(pokemon => pokemon.id == (
+    (pokeId-1 == 0) ? pokemonsList.length : pokeId - 1 
+  ))
 
+  //console.log(pokeId)
 
   useEffect(() => {
     const currentPokemon = pokemonsList.find(pokemon => pokemon.id == pokeId);
@@ -70,7 +74,7 @@ const PokemonDetails = () => {
     };
 
     fetchData();
-  }, [pokemon, requestData, species, weaknesses]);
+  }, [pokemon, requestData]);
 
   useEffect(() => {
     if (!species || !species.evolution_chain) return;
@@ -85,7 +89,7 @@ const PokemonDetails = () => {
     };
 
     fetchEvolutionChain();
-  }, [species, requestData, evolutionChain]);
+  }, [species, requestData]);
 
   const handleVersions = (versions) => {
 
@@ -177,17 +181,6 @@ const PokemonDetails = () => {
     return results;
   }
 
-  const handleChangePokemon = (newId) => {
-    const newPokemon = pokemonsList.find(pokemon => pokemon.id == newId);
-    if (newPokemon) {
-      setPokemon(newPokemon);
-      setSpecies(null);
-      setTypes([]);
-      setWeaknesses([]);
-      setEvolutionChain([]);
-    }
-  };
-
   return (
     <>
       {
@@ -196,12 +189,14 @@ const PokemonDetails = () => {
           <section className={styles.changeContainer}>
             <Change
               left
-              name={refactorDetails('name', nextPokemon.name)}
-              number={`#${refactorDetails('id', nextPokemon.id)}`}
+              name={refactorDetails('name', previousPokemon.name)}
+              number={`#${refactorDetails('id', previousPokemon.id)}`}
+              id= {previousPokemon.id}
             />
             <Change
               name={refactorDetails('name', nextPokemon.name)}
               number={`#${refactorDetails('id', nextPokemon.id)}`}
+              id = {nextPokemon.id}
             />
           </section>
 
