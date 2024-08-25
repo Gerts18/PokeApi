@@ -3,8 +3,9 @@
     flex-direction: column;
     justify-content: flex-start;
     width: 200px;
-    height: 300px;
+    height: auto;
     gap: 5px;
+    margin-bottom: 30px;
 }
 
 .pokemonImage{
@@ -78,4 +79,13 @@
     justify-content: center;
     gap: 5px;
     margin: 10px;
+}
+
+.card_evo{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 150px;
+    height: auto;
+    gap: 5px;
 }

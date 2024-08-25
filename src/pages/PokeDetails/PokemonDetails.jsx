@@ -14,15 +14,20 @@ const PokemonDetails = () => {
 
   const { pokemonsList, typeColors, refactorDetails, requestData } = useContext(PokemonContext);
 
+  const [pokemon, setPokemon] = useState(null)
+
   const [pokemonImage, setPokemonImage] = useState('')
   const [species, setSpecies] = useState(null)
   const [types, setTypes] = useState([])
   const [weaknesses, setWeaknesses] = useState([])
   const [evolutionChain, setEvolutionChain] = useState([])
 
-  const pokemon = pokemonsList.find(pokemon => pokemon.id == id);
   const nextPokemon = pokemonsList.find(pokemon => pokemon.id == (id+1))
   
+  useEffect(() => {
+    const currentPokemon = pokemonsList.find(pokemon => pokemon.id == id);
+    setPokemon(currentPokemon);
+  }, [id, pokemonsList]) 
 
   /*To handle data from the pokemon */
   useEffect(() => {
@@ -168,11 +173,25 @@ const PokemonDetails = () => {
     return results;
   }
 
+  /* const handleChangePokemon = (newId) => {
+    const newPokemon = pokemonsList.find(pokemon => pokemon.id == newId);
+    if (newPokemon) {
+      setPokemon(newPokemon);
+      setSpecies(null);
+      setTypes([]);
+      setWeaknesses([]);
+      setEvolutionChain([]);
+    }
+  }; */
+
   return (
     <>
       {
         pokemon &&
         <>
+          <section className={styles.changeContainer}>
+
+          </section>
           <section className={styles.mainContainer} >
             <div className={styles.pokemonTitle}>
               <h1 className={styles.text}> {refactorDetails('name', pokemon.name)} </h1>

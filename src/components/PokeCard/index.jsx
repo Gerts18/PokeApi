@@ -15,7 +15,7 @@ const PokeCard = (props) => {
 
 
   return (
-    <div className={styles.cardContainer}>
+    <div className={!evolution ? styles.cardContainer : styles.card_evo}>
       <Link className={styles.link} to={`/pokemon/${pokemonDetails.id}`}>
         <img
           className={!evolution ? styles.pokemonImage : styles.image_evo}
