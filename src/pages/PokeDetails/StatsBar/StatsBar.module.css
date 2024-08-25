@@ -1,0 +1,33 @@
+.statsBar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+}
+  
+.statsBar__inner {
+  width: 40px;
+  height: 150px;
+  border: 1px solid #ccc;
+  background-color: white;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  border: none;
+}
+
+.statsBar__fill {
+  background-color: var(--color-quaternary);
+  width: 100%;
+  transition: height 0.3s ease-out;
+}
+
+.statsBar__label {
+  margin-top: 5px;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 500;
+}
+

@@ -4,7 +4,7 @@
   --color-primary: #ffffff;
   --color-secundary:rgb(44, 47, 49);
   --color-tertiary: #4a4a4a;
-  --color-quaternary: cornflowerblue;
+  --color-quaternary: #30a7d7;
 }
 
 html {
@@ -15,8 +15,8 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: "Roboto", sans-serif;
-  
 }
+
 h1 {
   font-size: 2em;
   margin: 0;

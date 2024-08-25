@@ -1,0 +1,214 @@
+/*Styles for buttons*/
+
+.changeContainer{
+    display: flex;
+    gap: 5px;
+}
+
+/*Styles for the pokemon*/
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-inline: 20px;
+    gap: 40px;
+    padding: 20px;
+}
+
+.pokemonTitle {
+    display: flex;
+    align-self: center;
+    gap: 10px;
+    position: relative;
+    top: -50px;
+}
+
+.text{
+    font-size: 35px;
+}
+
+.pokemonTitle h1 {
+    font-weight: 400;
+}
+
+.pokemonTitle p {
+    color:  rgb(125, 127, 129);
+}
+
+h2 {
+    font-weight: 400;
+}
+
+.pokemonInfo{
+    display: flex;
+    justify-content: space-between;
+}
+
+.pokemonStats {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    gap: 20px;
+}
+
+.pokeImage {
+    background-color: #f5f5f5;
+    width: 400px;
+    height: auto;
+    padding: 15px;
+}
+
+.stats {
+    background-color: #a4a4a4;
+    border-radius: 5px;
+    padding: 15px;
+    width: 400px; 
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.statsContainer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.pokemonDescription {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    gap: 20px;
+}
+
+.pokemonDescription p {
+    font-size: 20px;
+}
+
+
+/*Pokemon versions styles*/
+
+.mainVersionsContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.versions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.versionContainer {
+    position: relative;
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+}
+
+.imageVersion {
+    width:100%;
+    height:auto;
+    cursor: pointer;
+    display: block;
+}
+
+.versionContainer .overlay{
+    position: absolute;
+    z-index: 1;
+    top: -22px;
+    left: -50px;
+    background-color: black;
+    color: white;
+    opacity: 0; 
+    transition: opacity 0.3s ease; 
+    font-size: 15px;
+    text-align: center;
+    border-radius: 20px 20px 20px 20px;
+    padding: 2px;
+    width: 150px;
+    height: auto;
+    pointer-events: none;
+}
+
+.versionContainer:hover .overlay {
+    opacity: 1; 
+}
+
+/*Pokemon general information styles*/
+.generalInformation{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    background-color: var(--color-quaternary);
+    width: 95%;
+    height: 280px;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.infoItem{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 20px;
+    justify-content: center;
+}
+
+.info{
+    color: white;
+    font-size: 18px;
+}
+
+.infoDescription {
+    font-weight: 500;
+}
+
+.genderImg {
+    width: 35px;
+    height: 35px;
+}
+
+/*Pokemon types styles*/
+
+.typesContainer {
+    display: flex;
+    gap: 5px;
+    margin-block: 4px;
+    flex-wrap: wrap;
+}
+
+.type{
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 10px;
+    width: 100px;
+    height: 20px;
+    font-weight: 400;
+    text-align: center;
+}
+
+
+/*Pokemon Evolutions*/
+
+.evolutions{
+    padding: 30px;
+    margin-inline: 20px;
+    background-color: var(--color-tertiary);
+    border-radius: 5px;
+}
+
+.evolutions h2 {
+    margin: 0;
+    color: white;
+}
+
+.pokemonEvolutions{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+}
+

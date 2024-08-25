@@ -1,0 +1,47 @@
+.container {
+    display: grid;
+    grid-template-rows: 1fr 1fr;  
+    width: 50%;
+    text-decoration: none;
+}
+
+.top {
+    grid-column: 1 / -1; 
+    background-color: #a4a4a4; 
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding-inline: 40px;
+    height: 60px;
+}
+
+.bottom_left {
+    background-color: #a4a4a4; 
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    cursor: pointer;
+    height: 40px;
+}
+
+.bottom_right {
+    background-color: white;
+    pointer-events: none; 
+}
+
+.image {
+    width: 25px;
+    height: auto;
+}
+
+.number {
+    color: white;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.name {
+    font-size: 25px;
+    font-weight: 500;
+    color: #616161;
+}

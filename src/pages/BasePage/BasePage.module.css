@@ -1,0 +1,16 @@
+.pincipalContainer {
+    background-color: white;
+    width: 70%; 
+    margin: 0 auto; 
+    max-width: 1200px; 
+    box-sizing: border-box; 
+}
+
+.outerContainer {
+    background-image: url('@/assets/back_image.jpg');
+    background-size: cover; 
+    background-position: center; 
+    min-height: 100vh; 
+    display: flex; 
+    justify-content: center; 
+}

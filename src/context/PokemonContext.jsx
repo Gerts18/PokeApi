@@ -14,10 +14,10 @@ const PokemonProvider = ({ children }) => {
         ice: 'lightblue',
         fighting: 'red',
         poison: 'blueviolet',
-        ground: 'brown',
+        ground: 'burlywood',
         flying: 'lightgrey',
         psychic: 'pink',
-        bug: 'olive',
+        bug: 'darkseagreen',
         rock: 'gray',
         ghost: 'indigo',
         dragon: 'purple',
@@ -29,7 +29,7 @@ const PokemonProvider = ({ children }) => {
 
     useEffect(() => {
         const getPokemons = async () => {
-            const request = await fetch("https://pokeapi.co/api/v2/pokemon?limit=10");
+            const request = await fetch("https://pokeapi.co/api/v2/pokemon");
             const data = await request.json();
             setPokemonsUrls(data.results);
         };
@@ -62,8 +62,19 @@ const PokemonProvider = ({ children }) => {
          }
     }
 
+    const requestData = async (url) => {
+        try {
+          const request = await fetch(url);
+          const data = await request.json();
+          return data;
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          return null; 
+        }
+      };
+
     return (
-        <PokemonContext.Provider value={{pokemonsList, refactorDetails, typeColors}}>
+        <PokemonContext.Provider value={{pokemonsList, refactorDetails, typeColors, requestData}}>
             {children}
         </PokemonContext.Provider>
     );
