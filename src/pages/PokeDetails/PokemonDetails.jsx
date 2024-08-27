@@ -36,19 +36,13 @@ const PokemonDetails = () => {
     pokemonsList, pokemon, pokemonImage, species, types, weaknesses, evolutionChain, pokeId
   ]
 
-  console.log(pokemonsList)
+  //console.log(pokemonsList)
 
   useEffect(() => {
     if (pokemonsList.length === 0) return;
 
     const currentPokemon = pokemonsList.find(pokemon => pokemon.id == pokeId);
     setPokemon(currentPokemon);
-
-    setPokemonImage('');
-    setSpecies(null);
-    setTypes([]);
-    setWeaknesses([]);
-    setEvolutionChain([]);
 
   }, [pokeId, pokemonsList])
 
@@ -69,27 +63,24 @@ const PokemonDetails = () => {
   }, [pokemon, requestData]);
 
   useEffect(() => {
-    if (types.length === 0 || !pokemon) return;
+    if (types.length === 0) return;
 
     const fetchWeaknessesData = async () => {
-      const urls = types.map(typeUrl => ({
-        url: typeUrl,
-        set_data: (data) => {
-          setWeaknesses((prev) => {
-            const newWeaknesses = data.damage_relations.double_damage_from.map(type => type.name);
-            return [...new Set([...prev, ...newWeaknesses])];
-          });
-        }
-      }));
+      const allWeaknesses = []; 
 
-      for (const { url, set_data } of urls) {
-        const response = await requestData(url);
-        set_data(response);
+      for (const typeUrl of types) {
+        const response = await requestData(typeUrl);
+        if (response && response.damage_relations) {
+          const newWeaknesses = response.damage_relations.double_damage_from.map(type => type.name);
+          allWeaknesses.push(...newWeaknesses);
+        }
       }
+
+      setWeaknesses([...new Set(allWeaknesses)]);
     };
 
     fetchWeaknessesData();
-  }, [types, pokemon, requestData]);
+  }, [types, requestData]);
 
   useEffect(() => {
     if (!species || !species.evolution_chain) return;
