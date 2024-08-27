@@ -3,9 +3,10 @@ import { createContext, useEffect, useState } from "react";
 export const PokemonContext = createContext();
 
 const PokemonProvider = ({ children }) => {
-    const [pokemonsUrls, setPokemonsUrls] = useState([]);
-    const [pokemonsList, setPokemonsList] = useState([]);
-    const [loading, setLoading] = useState(true);
+
+    const [allPokemons, setAllPokemons] = useState([]); 
+    const [pokemonsList, setPokemonsList] = useState([]); 
+    const [visibleCount, setVisibleCount] = useState(20); 
 
     const typeColors = {
         fire: 'orange',
@@ -28,29 +29,48 @@ const PokemonProvider = ({ children }) => {
         normal: 'beige'
     }
 
-    /*Get pokemons urls */
+
     useEffect(() => {
-        const getPokemons = async () => {
-            const request = await fetch("https://pokeapi.co/api/v2/pokemon");
-            const data = await request.json();
-            setPokemonsUrls(data.results);
+        const loadAllPokemons = async () => {
+            try {
+                const initialRequest = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10000`);
+                const initialData = await initialRequest.json();
+
+                const pokemonUrls = initialData.results.map((pokemon) => pokemon.url);
+
+                const fetchPokemonBatch = async (urls) => {
+                    return Promise.all(urls.map(async (url) => {
+                        const request = await fetch(url);
+                        return request.json();
+                    }));
+                };
+
+                const batchSize = 20;
+                let loadedPokemons = [];
+                for (let i = 0; i < pokemonUrls.length; i += batchSize) {
+                    const batchUrls = pokemonUrls.slice(i, i + batchSize);
+                    const pokemonBatch = await fetchPokemonBatch(batchUrls);
+                    loadedPokemons = [...loadedPokemons, ...pokemonBatch];
+                    setAllPokemons(loadedPokemons); 
+                }
+
+                setPokemonsList(loadedPokemons.slice(0, visibleCount));
+
+            } catch (error) {
+                console.error("Error fetching Pokémon data:", error);
+            }
         };
-        getPokemons();
+
+        loadAllPokemons();
     }, []);
 
-    /* Get data for each pokemon */
-    useEffect(() => {
-        const getPokemonsData = async () => {
-            const data = await Promise.all(
-                pokemonsUrls.map(async (pokemon) => {
-                    const request = await fetch(pokemon.url);
-                    return request.json();
-                })
-            );
-            setPokemonsList(data);
-        };
-        getPokemonsData();
-    }, [pokemonsUrls]);
+    const loadMorePokemons = () => {
+        setVisibleCount((prevCount) => {
+            const newCount = prevCount + 20;
+            setPokemonsList(allPokemons.slice(0, newCount));
+            return newCount;
+        });
+    };
 
     const refactorDetails = (key, data) => {
         switch (key) {
@@ -77,7 +97,16 @@ const PokemonProvider = ({ children }) => {
     };
 
     return (
-        <PokemonContext.Provider value={{ pokemonsList, refactorDetails, typeColors, requestData }}>
+        <PokemonContext.Provider
+         value={{ 
+                pokemonsList, 
+                refactorDetails, 
+                typeColors, 
+                requestData, 
+                loadMorePokemons ,
+                allPokemons
+            }}
+        >
             {children}
         </PokemonContext.Provider>
     );
