@@ -13,7 +13,7 @@ const PokemonDetails = () => {
 
   const { id } = useParams()
 
-  const { pokemonsList, typeColors, refactorDetails, requestData } = useContext(PokemonContext);
+  const { allPokemons, typeColors, refactorDetails, requestData } = useContext(PokemonContext);
 
   const [pokemon, setPokemon] = useState(null)
 
@@ -25,26 +25,22 @@ const PokemonDetails = () => {
 
   const pokeId = Number(id)
 
-  const nextPokemon = pokemonsList.find(pokemon => pokemon.id == (
-    (pokeId + 1 > pokemonsList.length) ? 1 : pokeId + 1
-  ))
-  const previousPokemon = pokemonsList.find(pokemon => pokemon.id == (
-    (pokeId - 1 == 0) ? pokemonsList.length : pokeId - 1
-  ))
+  const currentIndex = allPokemons.findIndex(pokemon => pokemon.id === pokeId);
 
-  let states = [
-    pokemonsList, pokemon, pokemonImage, species, types, weaknesses, evolutionChain, pokeId
-  ]
+  const previousIndex = (currentIndex - 1 + allPokemons.length) % allPokemons.length;
+  const nextIndex = (currentIndex + 1) % allPokemons.length;
 
-  //console.log(pokemonsList)
+  const previousPokemon = allPokemons[previousIndex];
+  const nextPokemon = allPokemons[nextIndex];
+
 
   useEffect(() => {
-    if (pokemonsList.length === 0) return;
+    if (allPokemons.length === 0) return;
 
-    const currentPokemon = pokemonsList.find(pokemon => pokemon.id == pokeId);
+    const currentPokemon = allPokemons.find(pokemon => pokemon.id == pokeId);
     setPokemon(currentPokemon);
 
-  }, [pokeId, pokemonsList])
+  }, [pokeId, allPokemons])
 
 
   useEffect(() => {
@@ -188,17 +184,21 @@ const PokemonDetails = () => {
         pokemon &&
         <>
           <section className={styles.changeContainer}>
-            <Change
-              left
-              name={refactorDetails('name', previousPokemon.name)}
-              number={`#${refactorDetails('id', previousPokemon.id)}`}
-              id={previousPokemon.id}
-            />
-            <Change
-              name={refactorDetails('name', nextPokemon.name)}
-              number={`#${refactorDetails('id', nextPokemon.id)}`}
-              id={nextPokemon.id}
-            />
+            {previousPokemon && (
+              <Change
+                left
+                name={refactorDetails('name', previousPokemon.name)}
+                number={`#${refactorDetails('id', previousPokemon.id)}`}
+                id={previousPokemon.id}
+              />
+            )}
+            {nextPokemon && (
+              <Change
+                name={refactorDetails('name', nextPokemon.name)}
+                number={`#${refactorDetails('id', nextPokemon.id)}`}
+                id={nextPokemon.id}
+              />
+            )}
           </section>
 
           <section className={styles.mainContainer} >
@@ -235,7 +235,7 @@ const PokemonDetails = () => {
               <div className={styles.pokemonDescription}>
 
                 <p>
-                  {species && species.flavor_text_entries[2].flavor_text.replace(/\f/g, ' ')}
+                  {species && species.flavor_text_entries[1].flavor_text.replace(/\f/g, ' ')}
                 </p>
 
                 <div className={styles.mainVersionsContainer}>
@@ -350,9 +350,9 @@ const PokemonDetails = () => {
               {
                 species &&
                 handleEvolutions(evolutionChain).map((evolution, index) => {
-                  let pokemonData = pokemonsList.find(pokemon => pokemon.id == evolution.id)
+                  let pokemonData = allPokemons.find(pokemon => pokemon.id == evolution.id)
                   if (!pokemonData) {
-                    console.error(`Pokemon with id ${evolution.id} not found in pokemonsList`);
+                    console.error(`Pokemon with id ${evolution.id} not found in allPokemons`);
                     return null;
                   }
                   return (

@@ -4,9 +4,9 @@ export const PokemonContext = createContext();
 
 const PokemonProvider = ({ children }) => {
 
-    const [pokemonsList, setPokemonsList] = useState([]);
-    const [offset, setOffset] = useState(0); 
-    const limit = 20; 
+    const [allPokemons, setAllPokemons] = useState([]); 
+    const [pokemonsList, setPokemonsList] = useState([]); 
+    const [visibleCount, setVisibleCount] = useState(20); 
 
     const typeColors = {
         fire: 'orange',
@@ -31,35 +31,45 @@ const PokemonProvider = ({ children }) => {
 
 
     useEffect(() => {
-        const loadPokemons = async () => {
+        const loadAllPokemons = async () => {
             try {
-                // Get pokemons urls
-                const request = await fetch(
-                    `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
-                );
-                const data = await request.json();
-                
-                //Obtain specific data of each pokemon 
-                const pokemonsData = await Promise.all(
-                    data.results.map(async (pokemon) => {
-                        const request = await fetch(pokemon.url);
-                        return request.json();
-                    })
-                );
+                const initialRequest = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10000`);
+                const initialData = await initialRequest.json();
 
-                // Add new pokemons
-                setPokemonsList( [...pokemonsList, ...pokemonsData]);
+                const pokemonUrls = initialData.results.map((pokemon) => pokemon.url);
+
+                const fetchPokemonBatch = async (urls) => {
+                    return Promise.all(urls.map(async (url) => {
+                        const request = await fetch(url);
+                        return request.json();
+                    }));
+                };
+
+                const batchSize = 20;
+                let loadedPokemons = [];
+                for (let i = 0; i < pokemonUrls.length; i += batchSize) {
+                    const batchUrls = pokemonUrls.slice(i, i + batchSize);
+                    const pokemonBatch = await fetchPokemonBatch(batchUrls);
+                    loadedPokemons = [...loadedPokemons, ...pokemonBatch];
+                    setAllPokemons(loadedPokemons); 
+                }
+
+                setPokemonsList(loadedPokemons.slice(0, visibleCount));
 
             } catch (error) {
                 console.error("Error fetching Pokémon data:", error);
-            } 
+            }
         };
 
-        loadPokemons();
-    }, [offset]); 
+        loadAllPokemons();
+    }, []);
 
     const loadMorePokemons = () => {
-        setOffset((prevOffset) => prevOffset + limit);
+        setVisibleCount((prevCount) => {
+            const newCount = prevCount + 20;
+            setPokemonsList(allPokemons.slice(0, newCount));
+            return newCount;
+        });
     };
 
     const refactorDetails = (key, data) => {
@@ -93,7 +103,8 @@ const PokemonProvider = ({ children }) => {
                 refactorDetails, 
                 typeColors, 
                 requestData, 
-                loadMorePokemons 
+                loadMorePokemons ,
+                allPokemons
             }}
         >
             {children}
