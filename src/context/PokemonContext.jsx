@@ -83,12 +83,37 @@ const PokemonProvider = ({ children }) => {
             pokemon.id.toString() === word
         );
 
-
         if (foundPokemon) {
             setPokemonsList([foundPokemon]);
         } else {
             setPokemonsList([]);
         }
+    };
+
+    const randomizePokemons = () => {
+        const shuffledPokemons = [...allPokemons].sort(() => Math.random() - 0.5);
+        setPokemonsList(shuffledPokemons.slice(0, visibleCount));
+    };
+
+    const sortPokemons = (criteria) => {
+        let sortedPokemons;
+        switch (criteria) {
+            case 'Lowest Number (first)':
+                sortedPokemons = [...allPokemons].sort((a, b) => a.id - b.id);
+                break;
+            case 'Highest Number (first)':
+                sortedPokemons = [...allPokemons].sort((a, b) => b.id - a.id);
+                break;
+            case 'A-Z':
+                sortedPokemons = [...allPokemons].sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case 'Z-A':
+                sortedPokemons = [...allPokemons].sort((a, b) => b.name.localeCompare(a.name));
+                break;
+            default:
+                sortedPokemons = allPokemons;
+        }
+        setPokemonsList(sortedPokemons.slice(0, visibleCount));
     };
 
     const refactorDetails = (key, data) => {
@@ -124,7 +149,9 @@ const PokemonProvider = ({ children }) => {
                 requestData,
                 loadMorePokemons,
                 allPokemons,
-                filterPokemons
+                filterPokemons,
+                randomizePokemons,
+                sortPokemons
             }}
         >
             {children}
