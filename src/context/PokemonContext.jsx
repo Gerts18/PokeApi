@@ -4,9 +4,9 @@ export const PokemonContext = createContext();
 
 const PokemonProvider = ({ children }) => {
 
-    const [allPokemons, setAllPokemons] = useState([]); 
-    const [pokemonsList, setPokemonsList] = useState([]); 
-    const [visibleCount, setVisibleCount] = useState(20); 
+    const [allPokemons, setAllPokemons] = useState([]);
+    const [pokemonsList, setPokemonsList] = useState([]);
+    const [visibleCount, setVisibleCount] = useState(20);
 
     const typeColors = {
         fire: 'orange',
@@ -51,7 +51,7 @@ const PokemonProvider = ({ children }) => {
                     const batchUrls = pokemonUrls.slice(i, i + batchSize);
                     const pokemonBatch = await fetchPokemonBatch(batchUrls);
                     loadedPokemons = [...loadedPokemons, ...pokemonBatch];
-                    setAllPokemons(loadedPokemons); 
+                    setAllPokemons(loadedPokemons);
                 }
 
                 setPokemonsList(loadedPokemons.slice(0, visibleCount));
@@ -70,6 +70,50 @@ const PokemonProvider = ({ children }) => {
             setPokemonsList(allPokemons.slice(0, newCount));
             return newCount;
         });
+    };
+
+    const filterPokemons = (word) => {
+        if (!word) {
+            setPokemonsList(allPokemons.slice(0, visibleCount));
+            return;
+        }
+
+        const foundPokemon = allPokemons.find(pokemon => 
+            pokemon.name.toLowerCase() === word.toLowerCase() || 
+            pokemon.id.toString() === word
+        );
+
+        if (foundPokemon) {
+            setPokemonsList([foundPokemon]);
+        } else {
+            setPokemonsList([]);
+        }
+    };
+
+    const randomizePokemons = () => {
+        const shuffledPokemons = [...allPokemons].sort(() => Math.random() - 0.5);
+        setPokemonsList(shuffledPokemons.slice(0, visibleCount));
+    };
+
+    const sortPokemons = (criteria) => {
+        let sortedPokemons;
+        switch (criteria) {
+            case 'Lowest Number (first)':
+                sortedPokemons = [...allPokemons].sort((a, b) => a.id - b.id);
+                break;
+            case 'Highest Number (first)':
+                sortedPokemons = [...allPokemons].sort((a, b) => b.id - a.id);
+                break;
+            case 'A-Z':
+                sortedPokemons = [...allPokemons].sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case 'Z-A':
+                sortedPokemons = [...allPokemons].sort((a, b) => b.name.localeCompare(a.name));
+                break;
+            default:
+                sortedPokemons = allPokemons;
+        }
+        setPokemonsList(sortedPokemons.slice(0, visibleCount));
     };
 
     const refactorDetails = (key, data) => {
@@ -98,13 +142,16 @@ const PokemonProvider = ({ children }) => {
 
     return (
         <PokemonContext.Provider
-         value={{ 
-                pokemonsList, 
-                refactorDetails, 
-                typeColors, 
-                requestData, 
-                loadMorePokemons ,
-                allPokemons
+            value={{
+                pokemonsList,
+                refactorDetails,
+                typeColors,
+                requestData,
+                loadMorePokemons,
+                allPokemons,
+                filterPokemons,
+                randomizePokemons,
+                sortPokemons
             }}
         >
             {children}

@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import styles from './AdvanceSearch.module.css'
 import AdvancedButton from './AdvancedButton'
 import Sorter from './Sorter'
 import downArrow from '@/assets/arrow_drop_down.svg'
 import upArrow from '@/assets/arrow_drop_up.svg'
+import { PokemonContext } from '@/context/PokemonContext'
 
 const AdvanceSearch = () => {
     const [isVisible, setIsVisible] = useState(false)
+
+    const {randomizePokemons} = useContext(PokemonContext)
 
     const toggleVisibility = () => {
         setIsVisible(!isVisible)
@@ -28,10 +31,10 @@ const AdvanceSearch = () => {
                 }
             </div>
             <div className={styles.otherFilters}>
-                <AdvancedButton>
+                <AdvancedButton onClick={randomizePokemons} >
                     <p>Surprise Me!</p>
                 </AdvancedButton>
-                <Sorter/>
+                <Sorter  />
             </div>
         </>
     )
