@@ -29,3 +29,29 @@
     height: 50px;
 }
 
+@media only screen and (max-width: 992px) and (min-width: 825px) {
+    .message{
+        width: 300px;
+    }
+
+    .searchContainer{
+        width: 350px;
+    }
+}
+
+@media only screen and  (max-width: 825px) {
+    .header{
+        flex-direction: column;
+        gap: 40px;
+        align-items: center;
+       
+    }
+
+    .message{
+        width: 80%;
+    }
+
+    .searchContainer{
+        width: 70%;
+    }
+}
