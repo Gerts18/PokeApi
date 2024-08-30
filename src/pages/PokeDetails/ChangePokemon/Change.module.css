@@ -45,3 +45,32 @@
     font-weight: 500;
     color: #616161;
 }
+
+@media only screen and (max-width: 768px) {
+    .name{
+        font-size: 20px;
+    }
+
+    .number {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .name{
+        font-size: 17px;
+    }
+
+    .number {
+        font-size: 17px;
+    }
+
+    .top {
+        gap: 8px;
+        padding-inline: 10px;
+    }
+    .image {
+        width: 15px;
+        height: auto;
+    }
+}

@@ -31,3 +31,45 @@
   font-weight: 500;
 }
 
+@media only screen and (max-width: 1350px)  {
+  .statsBar__inner {
+    width: 35px;
+  }
+
+  .statsBar{
+    margin: 0;
+  }
+
+  .statsBar__label {
+    font-size: 12px;
+  }
+}   
+
+@media only screen and (max-width: 870px) {
+  .statsBar__inner {
+    width: 30px;
+  }
+
+  .statsBar__label {
+    font-size: 10px;
+  }
+}
+
+
+@media only screen and (max-width:610px) {
+
+  .statsBar__label {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .statsBar__inner {
+    width: 20px;
+  }
+
+  .statsBar__label {
+    font-size: 10px;
+  }
+  
+}
