@@ -13,7 +13,6 @@ const PokeCard = (props) => {
   const pokemonName = refactorDetails('name', pokemonDetails.name);
   const pokemonTypes = refactorDetails('types', pokemonDetails);
 
-
   return (
     <div className={!evolution ? styles.cardContainer : styles.card_evo}>
       <Link className={styles.link} to={`/pokemon/${pokemonDetails.id}`}>

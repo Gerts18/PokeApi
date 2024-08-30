@@ -1,9 +1,11 @@
-import React from 'react'
+import styles from './Page404.module.css'
+import pikachu from '@/assets/pikachu.png'
 
 const Page404 = () => {
   return (
-    <div>
-      <p>Not found</p>
+    <div className={styles.notFound}>
+      <img src={pikachu} alt="" />
+      <p>It seems like there is nothing here</p>
     </div>
   )
 }

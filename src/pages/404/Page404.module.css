@@ -1,0 +1,17 @@
+.notFound{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+.notFound img {
+    width: 300px;
+    height: auto;
+}
+
+.notFound p {
+    font-size: 25px;
+    font-weight: 500;
+}

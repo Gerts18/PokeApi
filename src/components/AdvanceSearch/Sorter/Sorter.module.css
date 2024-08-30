@@ -22,3 +22,20 @@
     border: none;
     border-radius: 5px;
 }
+
+
+@media only screen and (max-width: 992px) and (min-width: 825px) {
+    .optionList {
+        width: 250px;
+    }
+}
+
+@media only screen and (min-width:  768px) and (max-width: 825px) {
+    .optionList {
+        width: 450px;
+        justify-content: space-between;
+    }
+    .select{
+        width: 390px;
+    }
+}

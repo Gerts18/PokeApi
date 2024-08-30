@@ -26,3 +26,19 @@
     width: 40px;
     height: 25px;
 }
+
+@media only screen and (max-width: 992px) and (min-width: 825px) {
+    .form{
+        gap: 5px;
+    }
+
+    .form input {
+        width: 240px;
+    }
+}
+
+@media only screen and  (max-width: 825px) {
+    .form input{
+        width: 100%;
+    }
+}

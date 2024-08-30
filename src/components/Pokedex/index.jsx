@@ -7,12 +7,16 @@ import styles from './Pokedex.module.css'
 const Pokedex = () => {
 
     const {pokemonsList} = useContext(PokemonContext);
-    //console.log(pokemonsList)
+
+    if (!pokemonsList) {
+        return <p style={{ fontWeight: 'bolder' }}>Error...</p>;
+    }
+    
     return (
         <section className={styles.mainContainer}>
             {
-                pokemonsList.map((pokemon, index) => (  
-                    <PokeCard key={index} pokemonDetails = {pokemon} /> 
+                pokemonsList.map((pokemon) => (  
+                    <PokeCard key={pokemon.id} pokemonDetails = {pokemon} /> 
                 ))
             }
         </section>
