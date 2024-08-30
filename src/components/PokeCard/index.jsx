@@ -13,6 +13,13 @@ const PokeCard = (props) => {
   const pokemonName = refactorDetails('name', pokemonDetails.name);
   const pokemonTypes = refactorDetails('types', pokemonDetails);
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' 
+    });
+  };
+
 
   return (
     <div className={!evolution ? styles.cardContainer : styles.card_evo}>
@@ -21,6 +28,7 @@ const PokeCard = (props) => {
           className={!evolution ? styles.pokemonImage : styles.image_evo}
           src={pokemonDetails.sprites.other['official-artwork'].front_default}
           alt=""
+          onClick={scrollToTop}
         />
       </Link>
       <div>

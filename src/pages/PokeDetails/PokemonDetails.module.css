@@ -212,7 +212,7 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 100px;
+    gap: 90px;
 }
 
 @media only screen and (max-width: 1350px) {
