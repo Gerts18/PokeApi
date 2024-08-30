@@ -1,1 +1,1 @@
-Cosuming the Poke API 
+Consuming the Poke API 
