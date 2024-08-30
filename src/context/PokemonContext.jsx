@@ -45,13 +45,14 @@ const PokemonProvider = ({ children }) => {
                     }));
                 };
 
-                const batchSize = 20;
+                const batchSize = 100;
                 let loadedPokemons = [];
                 for (let i = 0; i < pokemonUrls.length; i += batchSize) {
                     const batchUrls = pokemonUrls.slice(i, i + batchSize);
                     const pokemonBatch = await fetchPokemonBatch(batchUrls);
                     loadedPokemons = [...loadedPokemons, ...pokemonBatch];
                     setAllPokemons(loadedPokemons);
+                    setPokemonsList(loadedPokemons.slice(0, visibleCount));
                 }
 
                 setPokemonsList(loadedPokemons.slice(0, visibleCount));
@@ -62,7 +63,7 @@ const PokemonProvider = ({ children }) => {
         };
 
         loadAllPokemons();
-    }, []);
+    }, [visibleCount]);
 
     const loadMorePokemons = () => {
         setVisibleCount((prevCount) => {
