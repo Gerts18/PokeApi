@@ -10,9 +10,9 @@ A small, responsive web app that aggregates multiple PokeAPI endpoints into a un
 
 ## Demo
 
-Live demo: *https://poke-api-full.vercel.app/*
+Live demo: *[POKEDEX](https://poke-api-full.vercel.app/)*
 
-Repository: *https://github.com/Gerts18/PokeApi*
+Repository: *[PokeApi](https://github.com/Gerts18/PokeApi)*
 
 ---
 
