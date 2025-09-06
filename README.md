@@ -2,6 +2,8 @@
 
 **Interactive Pokédex built with React**
 
+![screenshot](src/assets/POKEAPI.png)
+
 A small, responsive web app that aggregates multiple PokeAPI endpoints into a unified data model per Pokémon and exposes that data through a centralized Context. Browse, search, and open detail pages for each Pokémon — optimized for developer ergonomics and easy extension.
 
 ---
